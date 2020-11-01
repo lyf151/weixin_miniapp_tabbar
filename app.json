@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "index/index",
+    "profile/profile",
+    "pages/dao/dao",
+    "pages/yij/yij",
+    "pages/li/li",
+    "pages/yi/yi",
+    "pages/ci/ci",
+    "pages/si/si",
+    "pages/jing/jing"
+  ],
+  "tabBar": {
+    "custom": true,
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "index/index",
+        "iconPath": "image/icon_component.png",
+        "selectedIconPath": "image/icon_component_HL.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "profile/profile",
+        "iconPath": "image/icon_API.png",
+        "selectedIconPath": "image/icon_API_HL.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "自定义tabbar",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "menutabbar":"/components/menutabbar/menutabbar"
+  }
+}

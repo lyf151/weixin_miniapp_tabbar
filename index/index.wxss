@@ -1,0 +1,15 @@
+.nav {
+  position: fixed;
+  width: 100%;
+  height: 54rpx;
+  line-height: 54rpx;
+  background-color: red;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav image{
+  height: 54rpx;
+  width: 72rpx;
+  margin: 0 0 10rpx 10rpx;
+}

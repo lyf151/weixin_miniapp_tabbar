@@ -1,0 +1,33 @@
+<!--miniprogram/custom-tab-bar/index.wxml-->
+<view class="on-tabbar">
+  <view catchtap="setR" class="menutext">{{r ? "导航" : menulist[itemindex].text}}</view>
+</view>
+<view class="tab-bar">
+  <view class="tab-bar-border"></view>
+
+  <view wx:key="list[0]" class="tab-bar-item" data-path="{{list[0].pagePath}}" data-index="{{0}}"  bind:tap="switchTab">
+    <image src="{{selected === 0 ? list[0].selectedIconPath : list[0].iconPath}}"></image>
+    <view style="color: {{selected === 0 ? selectedColor : color}}">{{list[0].text}}</view>
+  </view>
+
+<view  class="tabbarmenu">
+  <view class="inner">
+    <view style="pointer-events: {{ r ? 'auto' : 'none' }};" class="menu" animation="{{animaData}}"
+      bindtouchstart="touchstart" bindtouchend="touchend" >
+      <view style="background-image:url({{menulist[index].img || ''}})" class="menuitem" wx:for="{{menuanimas}}" animation="{{item}}"  wx:key="index"
+      catchtap="route"  data-url="{{menulist[index].url || ''}}" data-index="{{index}}"> 
+      {{menulist[index].text || index}}
+      </view>    
+        <!-- style="opacity: {{ r ? 1 : 0 }};" -->
+    </view>
+  </view>
+</view>
+
+  <view wx:key="list[1]"  class="tab-bar-item" data-path="{{list[1].pagePath}}" data-index="{{1}}" bindtap="switchTab">
+    <image src="{{selected === 1 ? list[1].selectedIconPath : list[1].iconPath}}"></image>
+    <view style="color: {{selected === 1 ? selectedColor : color}}">{{list[1].text}}</view>
+  </view>
+</view>
+
+
+

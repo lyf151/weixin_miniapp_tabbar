@@ -19,8 +19,8 @@ Component({
     r: false,
     rot: 0,
     cin: {
-      'width': 0,
-      'height': 0
+      'x': 0,
+      'y': 0
     },
     touchS: [0, 0],
     touchE: [0, 0],
@@ -102,8 +102,8 @@ Component({
         duration: 200
       });
       for (let i = 0; i < this.properties.itmenum; i++) {
-        let x = (this.data.cin.width) + r * Math.cos((ao * i - 90) * Math.PI / 180);
-        let y = (this.data.cin.height) + r * Math.sin((ao * i - 90) * Math.PI / 180);
+        let x = (this.data.cin.x) + r * Math.cos((ao * i - 90) * Math.PI / 180);
+        let y = (this.data.cin.y) + r * Math.sin((ao * i - 90) * Math.PI / 180);
         arr.push(anima.left(x).top(y).rotateZ(ao * i).step().export());
       }
       this.setData({
@@ -133,8 +133,8 @@ Component({
         h = res.height / 2
       });
       await this.getNode(".menu").then(res => {
-        this.data.cin.width = res.width / 2 - w;
-        this.data.cin.height = res.height / 2 - h;
+        this.data.cin.x = res.width / 2 - w;
+        this.data.cin.y = res.height / 2 - h;
       });
       this.setMenuItem(0);
       const screenW = wx.getSystemInfoSync().screenWidth;

@@ -41,11 +41,11 @@ Component({
       type: Number,
       value: 7
     },
-    //菜单项的数据，可以修改，
+    /*//菜单项的数据，可以修改，
     //如果要设置统一的背景图可以将img这项删除，
-    //wxml页面也其删除，修改的地方需要改两个，
-    //自定义tabbar和components/menutabbar，因为tabbar最多只能设置5个
-    //超过5个的无法设置，组件和tabbar都可以单独使用 
+    //wxml页面也删除，修改的地方需要改两个，
+    //自定义tabbar和components/menutabbar，tabbar最多只能设置5个
+    超过5个的无法设置，组件和tabbar都可以单独使用 */
     menulist: {
       type: Array,
       value: [{

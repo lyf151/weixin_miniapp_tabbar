@@ -1,6 +1,6 @@
 Component({
   data: {
-    selected: 0,
+    selected: -1,
     color: "#7A7E83",
     selectedColor: "#3cc51f",
     list: [{
@@ -213,6 +213,15 @@ Component({
   lifetimes: {
     ready() {
       this.init();
+    }
+  },
+  pageLifetimes:{
+    show(){
+       //控制菜单切换后文字显示效果
+       const page = getCurrentPages()[0];
+       this.setData({
+         itemindex:parseInt(page.options.index)
+       })
     }
   }
 })

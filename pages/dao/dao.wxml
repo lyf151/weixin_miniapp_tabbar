@@ -1,4 +1,4 @@
 <!--pages/dao/dao.wxml-->
 <text>pages/dao/dao.wxml</text>
 
-<menutabbar/>
+<tabbar/>

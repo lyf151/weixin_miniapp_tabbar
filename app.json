@@ -39,6 +39,6 @@
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
-    "menutabbar":"/components/menutabbar/menutabbar"
+    "tabbar":"/custom-tab-bar/index"
   }
 }

@@ -1,3 +1,14 @@
+const i_anima = wx.createAnimation({
+  delay: 0,
+  duration: 200
+});
+
+const m_anima = wx.createAnimation({
+  delay: 0,
+  duration: 100,
+  timingFunction: 'ease-out'
+});
+
 Component({
   data: {
     itemindex:-1,
@@ -32,20 +43,18 @@ Component({
     touchS: [0, 0],
     touchE: [0, 0],
     //半径
-    mr: 0
+    mr: 0,
+    itmenum:0,
+    ao:0
   },
 
   properties: {
     //这里放的菜单的数据可以放data里，如果只是使用components/menutabbar组件的话可以从使用的页面传数据
-    itmenum: {
-      type: Number,
-      value: 7
-    },
-    /*//菜单项的数据，可以修改，
+    //菜单项的数据，可以修改，
     //如果要设置统一的背景图可以将img这项删除，
-    //wxml页面也删除，修改的地方需要改两个，
-    //自定义tabbar和components/menutabbar，tabbar最多只能设置5个
-    超过5个的无法设置，组件和tabbar都可以单独使用 */
+    //wxml页面也其删除，修改的地方需要改两个，
+    //自定义tabbar和components/menutabbar，因为tabbar最多只能设置5个
+    //超过5个的无法设置，组件和tabbar都可以单独使用 
     menulist: {
       type: Array,
       value: [{
@@ -110,16 +119,12 @@ Component({
     },
 //菜单项控制效果
     setMenuItem(r) {
-      let ao = 360 / this.properties.itmenum;
+      let ao = this.data.ao;
       const arr = [];
-      let anima = wx.createAnimation({
-        delay: 0,
-        duration: 200
-      });
-      for (let i = 0; i < this.properties.itmenum; i++) {
+      for (let i = 0; i < this.data.itmenum; i++) {
         let x = (this.data.cin.x) + r * Math.cos((ao * i - 90) * Math.PI / 180);
         let y = (this.data.cin.y) + r * Math.sin((ao * i - 90) * Math.PI / 180);
-        arr.push(anima.left(x).top(y).rotateZ(ao * i).step().export());       
+        arr.push(i_anima.left(x).top(y).rotateZ(ao * i).step().export());       
       }
       this.setData({
         menuanimas: arr
@@ -141,38 +146,27 @@ Component({
     },
 //初始化菜单
     async init() {
+      this.data.itmenum = this.properties.menulist.length;
+      this.data.ao = 360 / this.data.itmenum;
       let w = 0;
       let h = 0;
       await this.getNode(".menutext").then(res => {
         w = res.width / 2
         h = res.height / 2
+        //按比例变化半径，外面标签元素如果调整了大小这里也得相应的调整（外面设置菜单元素标签为125rpx换算成px为62.5）
+        this.data.mr = res.width / 62.5 * 140
       });
       await this.getNode(".menu").then(res => {
         this.data.cin.x = res.width / 2 - w;
         this.data.cin.y = res.height / 2 - h;
       });
       this.setMenuItem(0);
-      const screenW = wx.getSystemInfoSync().screenWidth;
-      if (screenW <= 500) {
-        this.data.mr = 140;
-      } else if (screenW > 500 && screenW <= 800) {
-        this.data.mr = 300;
-      } else if (screenW > 800 && screenW <= 1024) {
-        this.data.mr = 360;
-      } else if (screenW > 1024) {
-        this.data.mr = 480;
-      }
     },
 //滑动菜单旋转
     run(n) {
-      let anima = wx.createAnimation({
-        delay: 0,
-        duration: 100,
-        timingFunction: 'ease-out'
-      });
-      this.data.rot += 360 / this.properties.itmenum * n;
+      this.data.rot += this.data.ao * n;
       this.setData({
-        animaData: anima.rotateZ(this.data.rot).step().export()
+        animaData: m_anima.rotateZ(this.data.rot).step().export()
       })
     },
 

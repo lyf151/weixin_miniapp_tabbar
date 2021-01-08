@@ -1,6 +1,17 @@
+const i_anima = wx.createAnimation({
+  delay: 0,
+  duration: 200
+});
+
+const m_anima = wx.createAnimation({
+  delay: 0,
+  duration: 100,
+  timingFunction: 'ease-out'
+});
+
 Component({
   data: {
-    selected: -1,
+    selected: 0,
     color: "#7A7E83",
     selectedColor: "#3cc51f",
     list: [{
@@ -25,13 +36,11 @@ Component({
     touchS: [0, 0],
     touchE: [0, 0],
     mr: 0,
+    itmenum:0,
+    ao:0
   },
 
   properties: {
-    itmenum: {
-      type: Number,
-      value: 7
-    },
     menulist: {
       type: Array,
       value: [{
@@ -95,16 +104,12 @@ Component({
     },
 
     setMenuItem(r) {
-      let ao = 360 / this.properties.itmenum;
+      let ao = this.data.ao;
       const arr = [];
-      let anima = wx.createAnimation({
-        delay: 0,
-        duration: 200
-      });
-      for (let i = 0; i < this.properties.itmenum; i++) {
+      for (let i = 0; i < this.data.itmenum; i++) {
         let x = (this.data.cin.x) + r * Math.cos((ao * i - 90) * Math.PI / 180);
         let y = (this.data.cin.y) + r * Math.sin((ao * i - 90) * Math.PI / 180);
-        arr.push(anima.left(x).top(y).rotateZ(ao * i).step().export());
+        arr.push(i_anima.left(x).top(y).rotateZ(ao * i).step().export());
       }
       this.setData({
         menuanimas: arr
@@ -126,38 +131,26 @@ Component({
     },
 
     async init() {
+      this.data.itmenum = this.properties.menulist.length
+      this.data.ao = 360 / this.data.itmenum
       let w = 0;
       let h = 0;
       await this.getNode(".menutext").then(res => {
         w = res.width / 2
         h = res.height / 2
+        this.data.mr = res.width / 62.5 * 140
       });
       await this.getNode(".menu").then(res => {
         this.data.cin.x = res.width / 2 - w;
         this.data.cin.y = res.height / 2 - h;
       });
       this.setMenuItem(0);
-      const screenW = wx.getSystemInfoSync().screenWidth;
-      if (screenW <= 500) {
-        this.data.mr = 140;
-      } else if (screenW > 500 && screenW <= 800) {
-        this.data.mr = 300;
-      } else if (screenW > 800 && screenW <= 1024) {
-        this.data.mr = 360;
-      } else if (screenW > 1024) {
-        this.data.mr = 480;
-      }
     },
 
     run(n) {
-      let anima = wx.createAnimation({
-        delay: 0,
-        duration: 100,
-        timingFunction: 'ease-out'
-      });
-      this.data.rot += 360 / this.properties.itmenum * n;
+      this.data.rot += this.data.ao * n;
       this.setData({
-        animaData: anima.rotateZ(this.data.rot).step().export()
+        animaData: m_anima.rotateZ(this.data.rot).step().export()
       })
     },
 
@@ -213,15 +206,6 @@ Component({
   lifetimes: {
     ready() {
       this.init();
-    }
-  },
-  pageLifetimes:{
-    show(){
-       //控制菜单切换后文字显示效果
-       const page = getCurrentPages()[0];
-       this.setData({
-         itemindex:parseInt(page.options.index)
-       })
     }
   }
 })

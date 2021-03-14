@@ -1,16 +1,7 @@
-const i_anima = wx.createAnimation({
-  delay: 0,
-  duration: 200
-});
-
-const m_anima = wx.createAnimation({
-  delay: 0,
-  duration: 100,
-  timingFunction: 'ease-out'
-});
 
 Component({
   data: {
+    itemindex:-1,
     selected: 0,
     color: "#7A7E83",
     selectedColor: "#3cc51f",
@@ -26,18 +17,13 @@ Component({
       text: "我的"
     }],
     animaData: {},
-    menuanimas: [],
     r: false,
     rot: 0,
-    cin: {
-      'x': 0,
-      'y': 0
-    },
     touchS: [0, 0],
     touchE: [0, 0],
     mr: 0,
-    itmenum:0,
-    ao:0
+    ao:0,
+    translateR:0
   },
 
   properties: {
@@ -103,54 +89,33 @@ Component({
       })
     },
 
-    setMenuItem(r) {
-      let ao = this.data.ao;
-      const arr = [];
-      for (let i = 0; i < this.data.itmenum; i++) {
-        let x = (this.data.cin.x) + r * Math.cos((ao * i - 90) * Math.PI / 180);
-        let y = (this.data.cin.y) + r * Math.sin((ao * i - 90) * Math.PI / 180);
-        arr.push(i_anima.left(x).top(y).rotateZ(ao * i).step().export());
-      }
-      this.setData({
-        menuanimas: arr
-      });
-    },
-
     setR() {
       if (!this.data.r) {
         this.setData({
-          r: true
+          r: true,
+          translateR:this.data.mr
         })
-        this.setMenuItem(this.data.mr);
       } else {
         this.setData({
-          r: false
+          r: false,
+          translateR:0
         })
-        this.setMenuItem(0);
       }
     },
 
     async init() {
-      this.data.itmenum = this.properties.menulist.length
-      this.data.ao = 360 / this.data.itmenum
-      let w = 0;
-      let h = 0;
+      this.setData({
+        ao:360 / this.properties.menulist.length
+      })
       await this.getNode(".menutext").then(res => {
-        w = res.width / 2
-        h = res.height / 2
         this.data.mr = res.width / 62.5 * 140
       });
-      await this.getNode(".menu").then(res => {
-        this.data.cin.x = res.width / 2 - w;
-        this.data.cin.y = res.height / 2 - h;
-      });
-      this.setMenuItem(0);
     },
 
     run(n) {
       this.data.rot += this.data.ao * n;
       this.setData({
-        animaData: m_anima.rotateZ(this.data.rot).step().export()
+        rot:this.data.rot
       })
     },
 
@@ -160,7 +125,6 @@ Component({
       let tsY = e.touches[0].pageY;
       this.data.touchS = [tsX, tsY]
     },
-    touchmove(e) {},
 
     touchend(e) {
       let tsX = e.changedTouches[0].pageX;
@@ -206,6 +170,15 @@ Component({
   lifetimes: {
     ready() {
       this.init();
+    }
+  },
+  pageLifetimes:{
+    show(){
+      //控制菜单切换后文字显示效果
+      const page = getCurrentPages()[0];
+      this.setData({
+        itemindex:parseInt(page.options.index)
+      })
     }
   }
 })

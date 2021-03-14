@@ -61,6 +61,7 @@
   height: 600rpx;
   position: relative;
   z-index: 1000;
+  transition: .1s ease-out;
 }
 
 .menuitem, .menutext{
@@ -82,7 +83,7 @@
 .menuitem{
   position: absolute;
   background-repeat: no-repeat;
-  /* background-color:rgba(125, 200, 125, 1); */
+  transition: .2s linear;
   background-color:rgba(23, 129, 181, 0.4);
 }
 

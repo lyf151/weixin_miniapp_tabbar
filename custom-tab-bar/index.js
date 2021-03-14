@@ -176,10 +176,12 @@ Component({
   pageLifetimes:{
     show(){
       //控制菜单切换后文字显示效果
-      const page = getCurrentPages()[0];
-      this.setData({
-        itemindex:parseInt(page.options.index)
-      })
+      const index = getCurrentPages()[0].options.index;
+      if(index){
+        this.setData({
+          itemindex:parseInt(index)
+        })
+      }
     }
   }
 })

@@ -92,7 +92,8 @@
   justify-content: center;
 }
 .tabbarmenu{
-  width: 250rpx;
+  width: 125rpx;
+  /* background-color:rgba(23, 129, 181, 0.8); */
 }
 
 

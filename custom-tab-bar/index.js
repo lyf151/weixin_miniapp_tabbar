@@ -2,7 +2,7 @@
 Component({
   data: {
     itemindex:-1,
-    selected: 0,
+    selected: -1,
     color: "#7A7E83",
     selectedColor: "#3cc51f",
     list: [{
@@ -32,37 +32,37 @@ Component({
       value: [{
           text: '页面1',
           img: '',
-          url: '/pages/dao/dao?index=0'
+          url: '/pages/dao/dao'
         },
         {
           text: '页面2',
           img: '',
-          url: '/pages/yij/yij?index=1'
+          url: '/pages/yij/yij'
         },
         {
           text: '页面3',
           img: '',
-          url: '/pages/li/li?index=2'
+          url: '/pages/li/li'
         },
         {
           text: '页面4',
           img: '',
-          url: '/pages/yi/yi?index=3'
+          url: '/pages/yi/yi'
         },
         {
           text: '页面5',
           img: '',
-          url: '/pages/ci/ci?index=4'
+          url: '/pages/ci/ci'
         },
         {
           text: '页面6',
           img: '',
-          url: '/pages/si/si?index=5'
+          url: '/pages/si/si'
         },
         {
           text: '页面7',
           img: '',
-          url: '/pages/jing/jing?index=6'
+          url: '/pages/jing/jing'
         }
       ]
     },
@@ -155,11 +155,12 @@ Component({
 
     route(url) {
       const pages = getCurrentPages();
+      // console.log(url);
       // console.log(url.target.dataset.url,pages[0].is);
       if (url.target.dataset.url) {
         if (!url.target.dataset.url.includes(pages[0].is)) {
           wx.redirectTo({
-            url: url.target.dataset.url
+            url: url.target.dataset.url+'?index='+url.target.dataset.index
           })       
         }
       }

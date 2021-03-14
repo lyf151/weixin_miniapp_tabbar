@@ -16,11 +16,11 @@
         bindtouchstart="touchstart" bindtouchend="touchend">
         <!-- wx:for="{{menuanimas}}" animation="{{item}}"  wx:key="index"  animation="{{animaData}}"-->
         <view
-          style="background-image:url({{menulist[index].img || ''}});transform: rotate({{index * ao + 180 + 'deg'}}) translateY({{translateR + 'px'}});"
+          style="background-image:url({{item.img || ''}});transform: rotate({{index * ao + 180 + 'deg'}}) translateY({{translateR + 'px'}});"
           class="menuitem" wx:for="{{menulist}}" wx:key="index" catchtap="route"
-          data-url="{{menulist[index].url || ''}}" data-index="{{index}}">
+          data-url="{{item.url || ''}}" data-index="{{index}}">
           <view style="transform:rotateZ(180deg); pointer-events: none;">
-            {{menulist[index].text || index}}
+            {{item.text || index}}
           </view>
         </view>
         <!-- style="opacity: {{ r ? 1 : 0 }};" -->

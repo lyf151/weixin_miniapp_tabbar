@@ -1,7 +1,7 @@
 
 Component({
   data: {
-    itemindex:-1,
+    menuText:'',
     selected: -1,
     color: "#7A7E83",
     selectedColor: "#3cc51f",
@@ -160,7 +160,7 @@ Component({
       if (url.target.dataset.url) {
         if (!url.target.dataset.url.includes(pages[0].is)) {
           wx.redirectTo({
-            url: url.target.dataset.url+'?index='+url.target.dataset.index
+            url: url.target.dataset.url+'?text='+url.target.dataset.text
           })       
         }
       }
@@ -176,10 +176,11 @@ Component({
   pageLifetimes:{
     show(){
       //控制菜单切换后文字显示效果
-      const index = getCurrentPages()[0].options.index;
-      if(index){
+      const pages = getCurrentPages()
+      const text = pages[pages.length - 1].options.text;
+      if(text){
         this.setData({
-          itemindex:parseInt(index)
+          menuText:text
         })
       }
     }
